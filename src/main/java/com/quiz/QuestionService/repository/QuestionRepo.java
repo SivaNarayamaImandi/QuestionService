@@ -14,6 +14,6 @@ public interface QuestionRepo extends JpaRepository<Question, Integer> {
 
     List<Question> findByDifficultyLevel(String difficultyLevel);
 
-    @Query(value = "SELECT * FROM question WHERE category = :category ORDER BY RAND() LIMIT :numberOfQuestions", nativeQuery = true)
-    List<Question> findRandomQuestionsByCategory(String category, int numberOfQuestions);
+    @Query(value = "SELECT q.id FROM question q WHERE q.category = :category ORDER BY RAND() LIMIT :numberOfQuestions", nativeQuery = true)
+    List<Integer> findRandomQuestionsByCategory(String category, int numberOfQuestions);
 }

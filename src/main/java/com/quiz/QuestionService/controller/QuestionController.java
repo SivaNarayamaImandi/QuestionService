@@ -1,6 +1,8 @@
 package com.quiz.QuestionService.controller;
 
 import com.quiz.QuestionService.model.Question;
+import com.quiz.QuestionService.model.QuestionWrapper;
+import com.quiz.QuestionService.model.Response;
 import com.quiz.QuestionService.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +45,20 @@ public class QuestionController {
     @DeleteMapping("delete-question/{id}")
     public ResponseEntity<String> deleteQuestion(@PathVariable int id) {
         return questionService.deleteQuestion(id);
+    }
+
+    @GetMapping("generate-question")
+    public ResponseEntity<List<Integer>> generateQuestion(@RequestParam String category, @RequestParam int numberOfQuestions) {
+        return questionService.generateQuestion(category, numberOfQuestions);
+    }
+
+    @PostMapping("get-questions")
+    public ResponseEntity<List<QuestionWrapper>> getQuestions(@RequestBody List<Integer> questionIds) {
+        return questionService.getQuestionsById(questionIds);
+    }
+
+    @PostMapping("get-score")
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> response) {
+        return questionService.getScore(response);
     }
 }
