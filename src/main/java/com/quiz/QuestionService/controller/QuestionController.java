@@ -5,6 +5,7 @@ import com.quiz.QuestionService.model.QuestionWrapper;
 import com.quiz.QuestionService.model.Response;
 import com.quiz.QuestionService.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,9 @@ public class QuestionController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    Environment environment;
 
     @PostMapping("add-question")
     public ResponseEntity<String> addQuestion(@RequestBody Question question) {
@@ -49,6 +53,9 @@ public class QuestionController {
 
     @GetMapping("generate-question")
     public ResponseEntity<List<Integer>> generateQuestion(@RequestParam String category, @RequestParam int numberOfQuestions) {
+        // Load balancing is done by the service registry
+        // To check which instance is being used
+        System.out.println(environment.getProperty("local.server.port"));
         return questionService.generateQuestion(category, numberOfQuestions);
     }
 
